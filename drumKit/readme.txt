@@ -27,7 +27,7 @@ javascript
 	"window.addEventListener"
 	"document": when a HTML document is loaded into a web browser, it becomes a document object.
 	"document.querySelector" : returns the first element that matches a scpecified CSS selector(s) in the document.
-	"document.querySelectorAll": returns all elements that matches a scpecified CSS selector(s) in the document.
+	"document.querySelectorAll": returns all elements that matches a scpecified CSS selector(s) in the document. Returns a NodeList
 	"play()": starts playing the current audio/video
 	"classList": returns the class name(s) of an element.
 	"classList.add(class)"
