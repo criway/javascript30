@@ -7,4 +7,10 @@ Second exercise (CSS + JS Clock):
 		"transition-timing-function:cubic-bezier"
 	HTML:
 	JAVASCRIPT:
-	"setInterval"
+	"setInterval(function, interval)" calls a function or evaluates an expression at specified intervals(in miliseconds).
+		It returns an ID that is used ad the parameter for the clearInterval().
+		will continue calling the function until clearInterval() is called or the window is closed.
+	"clearInterval(id_of_setInterval)"
+	"setTimeout()" will call a function only once after the specified number of miliseconds.
+		It returns an ID that is used ad the parameter for the clearTimeout().
+	"clearTimeout()"
