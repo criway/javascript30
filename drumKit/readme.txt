@@ -22,12 +22,16 @@ html
 	"phrase tags": designed for specific purposes
 	
 javascript
+	"window": reresents an pen window browser. I the document contains frames (iframe), the browser creates one window object for
+				the HTML document and one aditional window for each frame.
 	"window.addEventListener"
-	"document.querySelector"
-	"document.querySelectorAll"
-	"play()"
+	"document": when a HTML document is loaded into a web browser, it becomes a document object.
+	"document.querySelector" : returns the first element that matches a scpecified CSS selector(s) in the document.
+	"document.querySelectorAll": returns all elements that matches a scpecified CSS selector(s) in the document.
+	"play()": starts playing the current audio/video
+	"classList": returns the class name(s) of an element.
 	"classList.add(class)"
-	"transitionend"
+	"transitionend": event that occurs when a CSS transition has completed
 	"audio/video.currentTime", sets or returns the current position (in seconds) of the playback
 				When setting this property, the playback will jump to the specified position
 	
