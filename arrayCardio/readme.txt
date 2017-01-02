@@ -1,4 +1,5 @@
 ArrayCardio notes:
+This exercise is to play with arrays and some of its very useful methods (filter, map, sort, reduce).
 	HTML:
 		"em element": emphasize the text (inclinado)
 	JAVASCRIPT:
