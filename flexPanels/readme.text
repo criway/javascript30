@@ -1,19 +1,67 @@
 5 exercies of Javascript30 series: Flex Panels Image Gallery
 	CSS:
-		"box-sizing"
+		"box-sizing": tells the browser what the sizing properties(width and height) should include.
+					Values:
+						-"content-box": Default, width and height includes only the content. Border, padding
+							or margin are not included.
+						-"border-box": includes content, padding and border, but not the margin.
+						-"initial": sets this property to its default value.
+						-"inherit": Inherits this property from its parent element.
+					Notes: this property solves the problem of having diferent <div> elements with the same	
+						size but them are shown with different sizes. This is because border-box property has 
+						the default value:"content-box". So just set box-sizing property to "border-box" and 
+						the <div> element will keep the size you set! ;)
 		*, *: before, *:after{
 			box-sizing: inherit;
 		}
-		"min-height"
-		"overflow"
-		".className:nth-child"
-		".className >*"
-		"font-family", cursive:
-		".className.open"
-		"display flex"
-		"flex:1": every element at the same lavel will distribute with the same size.
-		"flex-direction"
+		For more reads see "pseudo-elements"
+		"::before": is a pseudo-element, can be used to insert some content before the content of an element.
+		"::after": is a pseudo-element, can be used to insert some content after the content of an element
+		"min-height": to set the minimum height of an element.
+		"overflow": specifies what happens if content overflows an element's box. Specifies whether to clip
+			content or to add scrollbars when an element's content is too big to fit in a specified area.
+			Only works for block elements with a specified height.
+			Values:
+				-"visible": the overflow is not clipped, it renders outside the element's box. Default.
+				-"hidden": The overflow is clipped, and the rest of content will be invisible.
+				-"scroll": the overflow is clipped, but a scroll-bar is added to see the reast of the content.
+				-"auto": if overflow is clipped, a scroll-bar should be added to see the rest of the content.
+				-"initial": set this property to default.
+				-"inherit": inherits from its parent element.
+		".className:nth-child(n)": matches every element that is the n child, regardless of type of its parent.
+			n can be a formula, number or keyword..
+		":nth-of-type()": select the element that is the nth child of a particular type of its parent.
+		"typeelement1 > typeelement2": selects all typeelements2 where the parent is a typeelement1.
+			To know more see css selectors.
+		"font-family", cursive: https://www.w3.org/Style/Examples/007/fonts.en.html
+		".className.open": concatenation of 2 classes. select elements that belongs to both classes.
+		"display: flex": displays an element as a block-level flex container.
+			See more at http://www.w3schools.com/css/css3_flexbox.asp
+		"flex:1": specifies the length of the item, relative to the rest of the flexible items inside the same container.
+			Values:
+				-"flex-grow": a number specifying how much the item will grow realtive to the rest of the flexible items.
+				-"flex-shrink": a number specifying how much the item will shrink realtive to the rest of the flexible items.
+				-"flex-basis": the length of the item (auto, inherit or number with %-px-em or any length unit").
+				-"auto": same as 1 1 auto.
+				-"initial": same as 0 1 auto
+				-"none": same as 0 0 auto
+				-"inherit":
+		"flex-direction": specifies the direction of the flexible items.
+			Values:
+				-"row": Default. Items are displayed horizontally.
+				-"row-reverse": same as "row" but in reverse order
+				-"column": Items are displayed vertically, as a column.
+				-"column-reverse": same as "column" but in reverse order.
+				-"initial": sets to default.
+				-"inherit": 
 
 	HTML:
 	JAVASCRIPT:
-		"toggle"
+		"toggle" : by default it changes visibility hide/show. but any other property or function can do it.
+			Syntax: "selector.toggle(speed, easing, callback":
+			-speed: optional, specifies the speed of the effect (miliseconds/"slow"/"fast")
+			-easing: optional. Specifies the speed of the element in different points of the animation. Default swing.
+				Values:
+					-swing: moves slower at the beginning/end, but faster in the middle.
+					-linear: moves in a constant speed.
+			-callback: optional. A function to be executed after the toggle method is completed.
