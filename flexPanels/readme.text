@@ -1,1 +1,19 @@
 5 exercies of Javascript30 series: Flex Panels Image Gallery
+	CSS:
+		"box-sizing"
+		*, *: before, *:after{
+			box-sizing: inherit;
+		}
+		"min-height"
+		"overflow"
+		".className:nth-child"
+		".className >*"
+		"font-family", cursive:
+		".className.open"
+		"display flex"
+		"flex:1": every element at the same lavel will distribute with the same size.
+		"flex-direction"
+
+	HTML:
+	JAVASCRIPT:
+		"toggle"
