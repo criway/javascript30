@@ -235,4 +235,9 @@ GIT
 	What is the difference between branches and tags?
 		A tag is like a branch that does not move. So if we make new commits, the branch will point to the latest commit but the tag will remain 
 		pointing to its original commit.
-	
+		
+-GIT IS A DISTRIBUTED VERSION CONTROL SYSTEM
+	When we use "clone" command, git adds a few lines to our configuration repo .git\config
+	Each git repo, can remember info about other copies which we call "remote". 
+	Git defines a default remote repo "origin", and also a branch called "master" that maps over the master branch of the remote.
+	"git branch --all" shows all branches
