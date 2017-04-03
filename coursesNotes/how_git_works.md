@@ -129,3 +129,12 @@ GIT
 	Git knows always in which branch i am, the file .git\HEAD\ contains a line that defines our current branch:
 		"ref: refs/heads/master"
 	So HEAD is just a refference to a branch.
+	
+	To change our branch we have to make a checkout:
+		"git checkout <branchName>"
+		-checkout makes 2 things (move head and update working area):
+			1. git changes its head to point this branch.
+			2. Our working area changes to the state where the new branch was pointing.
+		
+	"git merge"		
+	
