@@ -1,0 +1,18 @@
+->Your first Directive.
+	->Tools
+		-dev tools in browser
+		-plunker: plkr.co
+			plunker is a comprehensive online tool
+	
+	->Ways of declaring directives
+		-1. As a custom element --> restrict "E" 
+		-2. As an attribute --> restrict: "A"
+		-3. As a class -->Not recommended
+		-4. As a comment -->Not recommended
+		
+	-Types of Directives
+		-1. Components: represent some data and asociated html display. Always implemented as a custom element. Often called Widget 
+		-2. Decorators: add aditional functionality to an existing tag, or modifies its display. Emplemented as a Attribute. Almost never have a template. Ex: ng-click
+		-3. Structural/Templating: Ex: ng-repeat
+		
+	-Replace property
