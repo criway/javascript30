@@ -189,5 +189,39 @@ GIT
 		3. Unreachable objects are garbage collected. Git checks for commits that are no longer accessible, no other element points to its hashCode.
 		
 -REBASING
+	Rebase "git rebase <branchToRebase>":
+	1. Rebase loocks for the first commit in <branchToRebase> that is also refferenced in our current branch, all previous
+	commits are shared in both branches.
+	2. Then git detach the current branch from the common commit and attach to the <branchToRebase> branch.
+	3. Now our current branch contains all the commits done while working on it PLUS the commits done in the <branchToRebase> branch.
+	
+	But this is not 100% true. Objects in git are inmmutables, so if we detach a branch and attach to another commit, the content of the branch changes so its hashcode had to change
+	as well, and this is not possible in git because our current branch still points to the same hashcode(commit)
+	
+	So what Rebase realy does is:
+	1. copy commits from current branch till the common commit and modify its parets, this way, the first commit of the current branch will be copied but the parent will be the last
+	commit of the <branchToRebase> branch. This means new hashcode so NEW COMMIT
+	2. when all new commits are created, git moves the branch to the copy of the las commit.
+	3. Git leaves the original commits in its state with no branchs refferencing them.
+	
+	---------->¡REBASE CREATES NEW COMMITS!<-----------
+	-GARBAGE COLLECTOR
+		Original commits are almost impossible to reach again. 
+		Git takes some time to check unreachable objects as commits and blobs and delete them. 
+	
+	Why do we have 2 methods to get the content together?
+		->merge:
+			+keeps the project's history
+			-merge can result less simple when working with big projects and lot of branches
+		->rebase:
+			+project looks more like a single line.
+			+rebases refactor history making it looking better
+			-the history is not real
+		
+		If we have doubts between merge and rebase, use merge.
 
+-TAGS	
+	-annotated tags
+	-non-annotated tags or lightweight tags
+	
 	
