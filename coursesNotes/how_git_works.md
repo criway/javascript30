@@ -183,3 +183,11 @@ GIT
 			2. Our working area changes to the state where the new branch was pointing.	
 	"git merge"		
 	
+	THREE RULES:
+		1. The current branch tracks new commits
+		2. When you move to another commit, Git updates your working directory
+		3. Unreachable objects are garbage collected. Git checks for commits that are no longer accessible, no other element points to its hashCode.
+		
+-REBASING
+
+	
