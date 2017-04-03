@@ -69,7 +69,63 @@ GIT
 		
 	
 	-VERSIONING
+		we modify a file and commit it.
+			"git cat-file -p <new commit Hashcode>"
+					tree 10348310cc1bebf0a8e25c9a80097153a6944baf
+					parent c7141b524051805b0b2439dd78923fc29e125e46
+					author criway <cri_way_16@hotmail.com> 1491220803 +0200
+					committer criway <cri_way_16@hotmail.com> 1491220803 +0200
+
+						more notes on git course
+		Now we have a new parameter called "parent", is the first commit. Commits are linked
+		
+		If the content of a file or directory havent changed, then the Hashcode will remain the same and git reuse it!, git do not duplicate 
+		objects that haven't changed. This is one of the reasons why git is efficient.
+	
+		"git count-objects" prints out the number of objects and the size of all them together
+		
+		Another great point is that git can store file diferences instead of the hole file in the "blob" object. Example, if we just
+		modify 1 line in a huge file, git will create a new blob object with just the difference(the line modified), not the hole content of the file.
+	
+	-TAGS:
+		tags is like a label for the current state of the project:
+			regular tags
+			annotated tags: come with a message
+		tags are also objects like commits
+			"git tag -a firstTag -m "first tag with the git fundamentals course" creates a tag
+			"git tag"
+					firstTag
+			"git cat-file -p firstTag"
+					object 31a2e5bbf2cf20f3611fc72ec12c30345d20c17a
+					type commit
+					tag firstTag
+					tagger criway <cri_way_16@hotmail.com> 1491225246 +0200
+
+					first tag with the git fundamentals course
+		The tag is a a commit attached to an object (linked)
+		
+	So in the git object database (.git\objects\) we have: 
+		-Blobs
+		-Trees
+		-Commits
+		-Annotated Tags
+	This is the Git Object Model
+	
+-BRANCHES:
+	Git normally puts branches inside .git\refs\heads\
+	if we check the content of the current branch(master), there is only one hashcode, which is the hash of the last commit:
+		31a2e5bbf2cf20f3611fc72ec12c30345d20c17a
+	"git cat-file -p master" / "git cat-file -p 31a2e5bbf2cf20f3611fc72ec12c30345d20c17a"
+			tree 10348310cc1bebf0a8e25c9a80097153a6944baf
+			parent c7141b524051805b0b2439dd78923fc29e125e46
+			author criway <cri_way_16@hotmail.com> 1491220803 +0200	
+			committer criway <cri_way_16@hotmail.com> 1491220803 +0200	
+			
+			more notes on git course
 		
 		
-		
-		
+	Branches are just simple references.
+	
+	Git knows always in which branch i am, the file .git\HEAD\ contains a line that defines our current branch:
+		"ref: refs/heads/master"
+	So HEAD is just a refference to a branch.
