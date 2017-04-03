@@ -224,4 +224,15 @@ GIT
 	-annotated tags
 	-non-annotated tags or lightweight tags
 	
+	Tags are saved at .git\refs\tags
+	
+	->non-annotated tags: "git tag <tagName>"
+		if we open any, we could check that a tag is a refference to an object, like a branch. If we move this file to the .git\refs\heads\
+		we transform the tag into a branch.
+	->annotated tags: "git tag <tagName>"
+		similar but the file contains the hashCode of the tag object, and that object is a refference to a commit.
+		
+	What is the difference between branches and tags?
+		A tag is like a branch that does not move. So if we make new commits, the branch will point to the latest commit but the tag will remain 
+		pointing to its original commit.
 	
