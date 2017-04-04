@@ -248,5 +248,33 @@ GIT
 	
 	-Synchronizing Repos
 		When we clone, we copy the objects from the origin repo to the local. But this is a bit tricky.
+		So if we make a new commit in local:
+			"git log -1":
+				commit 066deb4f117a22bbe9ec4ddba1669b4fabe831d5
+				Author: criway <cri_way_16@hotmail.com>
+				Date:   Tue Apr 4 10:42:11 2017 +0200
+
+						synchronizing repos
+			"git show-ref master"
+				066deb4f117a22bbe9ec4ddba1669b4fabe831d5 refs/heads/master
+				e42d61410e311f9b2cbfdad40a7323e936a68d76 refs/remotes/origin/master	
+		We can see that our local branch "master" is pointing to our last commit, but "origin/master" branch is not.
 		
-	
+		"git push" to update remote repo and then "git show-ref master":
+				066deb4f117a22bbe9ec4ddba1669b4fabe831d5 refs/heads/master
+				066deb4f117a22bbe9ec4ddba1669b4fabe831d5 refs/remotes/origin/master
+		Both branches points to our last commit now.
+		
+		But, what if we have some local commits and remote branch has different history with new commit? 
+			if we push, there will be a conflict. There are 2 options to solve this:
+				1. NOT RECOMENDED->"git push -f" f means force!, we force git to copy our history to the remote, so remote branch will point to our last commit and 
+				all other commits that remote had, will be or garbage collector.
+				2. RECOMENDED-> solve conflicts in our local repository before git push.
+					2_1. "git fetch" will copy in our local repo the remote new history and changes the origin/master pointer to the same as remote, so our local master branch will point to a different commit than origin/master.
+					2_2. "git merge origin/master" create new object which our local will point at
+					2_3. "git push" copy our history without conflicts to remote repo and sets te remote branch to the same object as our local object created on "git merge origin/master"
+				
+					As this procedure is so common ("git fetch" + "git merge origin/master"), there exist a command that makes both: "git pull"
+					So now we can just "git pull" + "git push"
+					
+		
