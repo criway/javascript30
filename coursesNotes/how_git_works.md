@@ -241,3 +241,12 @@ GIT
 	Each git repo, can remember info about other copies which we call "remote". 
 	Git defines a default remote repo "origin", and also a branch called "master" that maps over the master branch of the remote.
 	"git branch --all" shows all branches
+	
+	.git\refs\remotes\origin\ contains remote branches and also the HEAD file that sais where is HEAD pointing. But sometimes, as an improve feature of git, 
+	only the HEAD file exists and packs all remote branches at .git\packed-refs. This can happen in both the local and remote branches.
+	"git show-ref <branchName>" shows the commit the branch is pointing at. If we write "master", git will printout al branches that contains "master"(local and remote)
+	
+	-Synchronizing Repos
+		When we clone, we copy the objects from the origin repo to the local. But this is a bit tricky.
+		
+	
