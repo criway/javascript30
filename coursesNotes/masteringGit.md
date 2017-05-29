@@ -137,6 +137,172 @@ What reset does:
 **One of the easiest way to lose data**.
 
 ## The Four Areas: More Tools
+### The Stash
+There is only one command that affects Stash Area. We decide what happens to this area, so we have to be specific.
+
+We can understand this area as a **backup** area. Imagine we are working on something and before finish it, another important issue happens. 
+We can leave our current changes in a save place and delete them from the Working Area so we can work on the new important issue without dealing with changes from the old issue.
+
+- `git stash`
+    - `git stash --include-untracked`: 
+        1. Git takes all data from working Area and Index that is not in the current commit in the repository.
+        2. Copy all that data into the Stash Area.
+        3. Checkout the current commit.
+    - `git stash list`: prints the content of the Stash Area  
+    
+        >`stash@{id}: WIP on <branch>: <commitRef> <message>`
+    - `git stash apply` to move data from Stash into the Working Area and Index. We can specify the *id* of the Stash content we want to apply.
+    - `git stash clear` clear the Stash Area
+
+
+#### NOTE: revert a commit in remote:
+1. `git stash --include-untracked` to save (if you want) in Stash your local modifications  
+2. checkout the branch
+3. `git reset <commitHashcode>` with the option `--hard` `--mixed` `--soft` you want
+4. `git push -f` to force
+5. `git stash apply <id>` to recover code from Stash
+6. `git stash clear` to clear Stash area (if you want)
+
+### Solve Conflicts
+Conflicts occurs when git does not know how to apply changes when there are two or more modifications in the same part of the code.
+
+When it happens, git modify the conflict file to give us enough information to solve the conflict ourselves.
+>`some code...`  
+`<<<<<<< HEAD`  
+`changes from <currentBranch>`  
+`=======`  
+`changes from <otherBranchName>`  
+`>>>>>>> <otherBranchName>`  
+>
+How does Git know there is a conflict?
+> The merge command creates a few files into *.git/* (MERGE_HEAD, MERGE_MSG, MERGE_MODE) that signal that there is an operation being done.
+This files also contains information about what is being merged. We normally don´t realize about this files because git use to merge without conflicts.
+>
+
+At this point we can either cancel the merge or solve the conflicts. Lets solve it.
+
+As said before, we have our conflict file modified by git, so we can easily edit it as we want to choose the final code. After modifying,
+we must tell Git that conflicts are solved, git can not know it by its own. We can do it by staging the conflict files, it means, copying the file
+into the Index Area.
+
+`git add <conflictFile>`
+
+Now we just have to finish the merge
+
+`git commit`
+
+### Working with Paths
+
+- `git reset HEAD <file>` to unstage only one file. But remember, by default `reset` implements the `--mixed` option, so copy the file from the 
+ repository into the Index but not to the Working Area.
+ 
+What if we want to revert only one file to the remote state? 
+- `git reset --hard HEAD <file>`
+    >`fatal: Cannot do hard reset with paths.`  
+    
+    Git does not allow us.
+- `git checkout HEAD <file>` normally checkout moves the HEAD ref in the repository usually to a branch and the copy all the files from the repo to the Working Area and Index.
+ In this case checkout will just copy the file to both areas without moving the HEAD reference. This recover the file and destroy all changes done to the file.
+ There is no possibility to recover modifications.   
+ So **use with care!**.
+
+### Git is a Toolbox
+As we can see, there is not an unique or a specific command to implement actions. We can choose different ways to reach the same objective. 
+
+The knowledge of the 4 areas Git has, and how Git manage them is extremely important to fully understand Git. 
+Before typing commands, a good practice is to **stop and think**,  "ok, I want to do this and I can get it by moving this file to this area,
+is there any command for this?" and so on.
+
 ## History: Exploring the Past
+### A commit with Any Other Name
+There are many ways to refer to a commit.
+- `git log` shows the commits history, but this list is not rally easy to read and follow history. There are some options to make it simpler.
+    - `git log --graph --decorate --oneline` 
+        - `git log --graph` gives a nice graph structure
+        - `git log --decorate` shows the position references like branches and hEAD
+        - `git log --oneline` formats the log so that each commit takes only one line
+
+- `git show <commit>` shows data information about the commit. We can refer to the commit with the first 6 or 7 digits of its hashcode. 
+Another way to refer the commit is to write the name of the reference that is pointing to the commit. For example if we want to see the last commit in the repo,
+the branch and the HEAD refers to it, so we can just type `git show <branchName>` or `git show HEAD`.
+
+But what if we want to refer to other previous commits? there is no reference pointing at it: `^`
+- `^` means the parent commit, so if we type `git show HEAD^` we could see the second last commit (parent of the last one).
+ We can use it recursively: `git show HEAD^^`...
+- `~<number>` to avoid `^^^^^^` we can just type `git show HEAD~6`
+
+This syntax is fine when commits have just one parent, but it breaks down when it has multiple parents.
+- `git show HEAD~2^2` this will show the second parent of second commit from HEAD 
+
+There are other ways to show commits, for example `git show HEAD@{"1 month ago"}` will show the commit which HEAD was pointing 1 month ago.
+
+### History Forensics
+
+- `git blame <file>` where the lines in a file come from. Shows line by line details of when the line was created.
+- `git diff HEAD HEAD~2` shows the difference between 2 commits. Can be used also to show difference between two branches.
+
+### Browsing the log
+`git log` is the most useful command to explore history. Is the most complex command with lot of options.
+- `git log --grep <word>` will filter commits which contains the word
+- `git log -<x>` will show the last x commits
+
+You can see more about `log` [here](https://git-scm.com/docs/git-log)
+
 ## History: Fixing Mistakes
+This tool to fix or modify history are really useful in emergency cases.  
+
+### The Golden Rule
+**Never change shared history**, we should only modify local history.
+
+### Changing the Latest Commit
+- `git commit --amend` don't create a new commit, instead we amend the last commit. But remember that objects in Git are unmutable
+  so git don't modify the last commit.  
+What Git does inside is:
+    1. Make a new commit with both the last commit and new changes
+    2. Move branch and HEAD to point this new commit
+    3. The last commit will be deleted by the Garbage Collector
+
+### Interactive Rebases
+What if we want to "modify" commits in the past, not the last one?
+
+- `git rebase --interactive` or `git rebase -i`: With this option, `rebase` behaves much different. Now change History.
+    - `git rebase -i <commitReference>` change History from *commitReference* **excluding** it. 
+    Sows us a text editor to do a rebase, there is a list of commits ordered from the least recent to the most recent.
+    If we just accept, the history will remains equal.
+    We are **modifying a program**, we can reorder commits and change instructions... When we accept, the program will 
+    be executed and will stop on each commit so we can implement our modifications.
+        >`<instruction> <commitRef> <commitMessage>`  
+        >>- **Instruction** tells what to do with the commit. 
+        There is also an explanation of different instructions (after the list of commits) that we can apply to commit.  
+        
+        | Instruction | definition |  
+        | :---: | --- |
+        | pick | use commit |
+        | reword | use commit, but edit the commit message |
+        | edit | use commit, but stop for amending |
+        | squash | use commit, but meld into previous commit |
+        | fixup | like "squash", but discard this commit's log message |
+        | exec | run command (the rest of the line) using shell |
+        | drop | remove commit |
+        When executing the program, git tells some instructions so you will know every moment how to continue.
+        
+ This is a huuuuge powerful tool. Imagine that we are continuously committing in our local with lots of non-sens messages,
+ this will looks pretty weird when trying to follow the history graph. So before sharing our local changes, we should have a review
+ of our commits and message so the repository will be much more clear. We can see this process as a **refactor**.
+ 
+### The Reflog
+Git will keep unreachable commits for a while before send them to garbage collector.  
+What if we want to recover one of those objects?
+
+Every time a reference moves in the repo, git logs that move and save it inside the **Referencelog**
+- `git reflog <referenceName>` (Example, HEAD) will show a list of different operations we have done with it, at least those
+that haven't been sent to garbage collector yet.
+
+We can put a branch on a lost commit so this commit will be reachable.
+
+### Reverting Commits
+- `git revert <commitRef>` git will create a new commit with exactly the opposite changes than the *commitRef*.
+We must be careful with possible conflicts.  
+**`revert` can not revert the structure!** Be careful when revert merges. This is not an "undo".
+
 ## Finding Your Workflow
